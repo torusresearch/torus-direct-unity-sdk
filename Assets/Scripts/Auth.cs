@@ -4,21 +4,7 @@ using UnityEngine;
 
 public class Auth : MonoBehaviour
 {
-    private static AndroidJavaClass unityPlayer;
-
     private static AndroidJavaObject torusDirectPlugin;
-
-    public static AndroidJavaClass UnityPlayer
-    {
-        get
-        {
-            if (unityPlayer == null)
-            {
-                unityPlayer = new AndroidJavaClass("com.unity3d.player.UnityPlayer");
-            }
-            return unityPlayer;
-        }
-    }
 
     public static AndroidJavaObject TorusDirectPlugin
     {
@@ -35,20 +21,37 @@ public class Auth : MonoBehaviour
 
     void Start()
     {
-        Debug.Log("Auth started");
-
+        Debug.Log("TorusDirectPlugin.init");
         if (Application.platform == RuntimePlatform.Android)
         {
-            TorusDirectPlugin.Call("init", "<browser redirect URL>", "testnet", "<redirect URL>", UnityPlayer.GetStatic<AndroidJavaObject>("currentActivity"));
-        }
-        else
-        {
-            Debug.Log("Not Android");
+            TorusDirectPlugin.Call("init",
+                "https://scripts.toruswallet.io/redirect.html",
+                "testnet",
+                "torusapp://org.torusresearch.torusdirectandroid/redirect"
+            );
         }
     }
 
+    private float elapsedTime = 0f;
+    private bool triggeredLogin = false;
+
     void Update()
     {
+        if (triggeredLogin) return;
 
+        elapsedTime += Time.deltaTime;
+        if (elapsedTime > 10)
+        {
+            Debug.Log("TorusDirectPlugin.triggerLogin");
+            if (Application.platform == RuntimePlatform.Android)
+            {
+                TorusDirectPlugin.Call("triggerLogin",
+                    "google",
+                    "google-lrc",
+                    "221898609709-obfn3p63741l5333093430j3qeiinaa8.apps.googleusercontent.com"
+                );
+            }
+            triggeredLogin = true;
+        }
     }
 }

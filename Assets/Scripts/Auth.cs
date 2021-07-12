@@ -12,7 +12,7 @@ public class Auth : MonoBehaviour
         {
             if (torusDirectPlugin == null)
             {
-                AndroidJavaClass cls = new AndroidJavaClass("org.torusresearch.unity.torusdirect.TorusDirectPlugin");
+                AndroidJavaClass cls = new AndroidJavaClass("org.torusresearch.unity.torusdirect.Plugin");
                 torusDirectPlugin = cls.CallStatic<AndroidJavaObject>("getInstance");
             }
             return torusDirectPlugin;

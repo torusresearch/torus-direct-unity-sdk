@@ -1,4 +1,5 @@
-@file:JvmName("TorusDirectPlugin")
+@file:JvmName("Plugin")
+@file:Suppress("Unused")
 
 package org.torusresearch.unity.torusdirect
 
@@ -10,15 +11,11 @@ import org.torusresearch.torusdirect.TorusDirectSdk
 import org.torusresearch.torusdirect.types.DirectSdkArgs
 import org.torusresearch.torusdirect.types.TorusNetwork
 
-private val instance = TorusDirect()
+val instance = TorusDirectPlugin()
 
-public fun getInstance(): TorusDirect {
-    return instance
-}
-
-class TorusDirect internal constructor() {
+class TorusDirectPlugin internal constructor() {
     companion object {
-        private val tag = "TorusDirectPlugin"
+        private val tag = TorusDirectPlugin::class.simpleName
     }
 
     private var args: DirectSdkArgs? = null
@@ -46,7 +43,7 @@ class TorusDirect internal constructor() {
             ).joinToString(" ")
         )
 
-        val sdk = TorusDirectSdk(args, UnityPlayer.currentActivity)
+        @Suppress("UNUSED_VARIABLE") val sdk = TorusDirectSdk(args, UnityPlayer.currentActivity)
         Log.d(tag + "triggerLogin", "Initialized TorusDirect SDK successfully")
 
         val customTabsBuilder = CustomTabsIntent.Builder()

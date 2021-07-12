@@ -8,6 +8,7 @@ import com.unity3d.player.UnityPlayer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import org.json.JSONObject
 import org.torusresearch.torusdirect.TorusDirectSdk
 import org.torusresearch.torusdirect.types.DirectSdkArgs
 import org.torusresearch.torusdirect.types.LoginType
@@ -35,10 +36,18 @@ class TorusDirectPlugin internal constructor() {
         args = DirectSdkArgs(browserRedirectUri, TorusNetwork.valueOfLabel(network), redirectUri)
     }
 
-    fun triggerLogin(typeOfLogin: String, verifier: String, clientId: String) {
+    fun triggerLogin(
+        gameObject: String,
+        callback: String,
+        typeOfLogin: String,
+        verifier: String,
+        clientId: String
+    ) {
         if (args == null) throw Exception("TorusDirect.init must be called before triggerLogin.")
         Log.d(
             "${tag}#triggerLogin", arrayOf(
+                "gameObject=$gameObject",
+                "callback=$callback",
                 "typeOfLogin=$typeOfLogin",
                 "verifier=$verifier",
                 "clientId=$clientId",
@@ -47,20 +56,35 @@ class TorusDirectPlugin internal constructor() {
         )
 
         CoroutineScope(Dispatchers.Default).launch {
-            val sdk = TorusDirectSdk(args, UnityPlayer.currentActivity)
-            launch(Dispatchers.Main) {
+            try {
+                val sdk = TorusDirectSdk(args, UnityPlayer.currentActivity)
                 Log.d("${tag}#triggerLogin", "Initialized TorusDirect SDK successfully")
-            }
 
-            sdk.triggerLogin(
-                SubVerifierDetails(
-                    LoginType.valueOfLabel(typeOfLogin),
-                    verifier,
-                    clientId
-                )
-            ).join()
-            launch(Dispatchers.Main) {
+                val result = sdk.triggerLogin(
+                    SubVerifierDetails(
+                        LoginType.valueOfLabel(typeOfLogin),
+                        verifier,
+                        clientId
+                    )
+                ).join()
                 Log.d("${tag}#triggerLogin", "Logged in successfully")
+                launch(Dispatchers.Main) {
+                    val json = JSONObject()
+                    json.put("status", "fulfilled")
+                    val value = JSONObject()
+                    value.put("privateKey", result.privateKey)
+                    value.put("publicAddress", result.publicAddress)
+                    json.put("value", value)
+                    UnityPlayer.UnitySendMessage(gameObject, callback, json.toString())
+                }
+            } catch (e: Throwable) {
+                Log.d("${tag}#triggerLogin", "Failed to login")
+                launch(Dispatchers.Main) {
+                    val json = JSONObject()
+                    json.put("status", "rejected")
+                    json.put("reason", e.message)
+                    UnityPlayer.UnitySendMessage(gameObject, callback, json.toString())
+                }
             }
         }
     }

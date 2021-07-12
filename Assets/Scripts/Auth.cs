@@ -46,6 +46,8 @@ public class Auth : MonoBehaviour
             if (Application.platform == RuntimePlatform.Android)
             {
                 TorusDirectPlugin.Call("triggerLogin",
+                    gameObject.name,
+                    "OnPostLogin",
                     "google",
                     "google-lrc",
                     "221898609709-obfn3p63741l5333093430j3qeiinaa8.apps.googleusercontent.com"
@@ -53,5 +55,9 @@ public class Auth : MonoBehaviour
             }
             triggeredLogin = true;
         }
+    }
+
+    void OnPostLogin(string message) {
+        Debug.Log($"OnPostLogin: ${message}");
     }
 }

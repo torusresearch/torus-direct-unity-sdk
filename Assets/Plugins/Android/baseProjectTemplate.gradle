@@ -4,6 +4,7 @@ allprojects {
     buildscript {
         repositories {**ARTIFACTORYREPOSITORY**
             google()
+            mavenCentral()
             jcenter()
         }
 
@@ -19,6 +20,7 @@ allprojects {
 
     repositories {**ARTIFACTORYREPOSITORY**
         google()
+        mavenCentral()
         jcenter()
         maven { url "https://jitpack.io" }
         flatDir {

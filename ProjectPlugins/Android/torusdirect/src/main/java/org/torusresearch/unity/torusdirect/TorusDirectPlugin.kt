@@ -3,12 +3,15 @@
 
 package org.torusresearch.unity.torusdirect
 
-import android.net.Uri
 import android.util.Log
-import androidx.browser.customtabs.CustomTabsIntent
 import com.unity3d.player.UnityPlayer
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import org.torusresearch.torusdirect.TorusDirectSdk
 import org.torusresearch.torusdirect.types.DirectSdkArgs
+import org.torusresearch.torusdirect.types.LoginType
+import org.torusresearch.torusdirect.types.SubVerifierDetails
 import org.torusresearch.torusdirect.types.TorusNetwork
 
 val instance = TorusDirectPlugin()
@@ -43,11 +46,22 @@ class TorusDirectPlugin internal constructor() {
             ).joinToString(" ")
         )
 
-        @Suppress("UNUSED_VARIABLE") val sdk = TorusDirectSdk(args, UnityPlayer.currentActivity)
-        Log.d(tag + "triggerLogin", "Initialized TorusDirect SDK successfully")
+        CoroutineScope(Dispatchers.Default).launch {
+            val sdk = TorusDirectSdk(args, UnityPlayer.currentActivity)
+            launch(Dispatchers.Main) {
+                Log.d("${tag}#triggerLogin", "Initialized TorusDirect SDK successfully")
+            }
 
-        val customTabsBuilder = CustomTabsIntent.Builder()
-        val customTabsIntent = customTabsBuilder.build()
-        customTabsIntent.launchUrl(UnityPlayer.currentActivity, Uri.parse("https://customauth.io"))
+            sdk.triggerLogin(
+                SubVerifierDetails(
+                    LoginType.valueOfLabel(typeOfLogin),
+                    verifier,
+                    clientId
+                )
+            ).join()
+            launch(Dispatchers.Main) {
+                Log.d("${tag}#triggerLogin", "Logged in successfully")
+            }
+        }
     }
 }

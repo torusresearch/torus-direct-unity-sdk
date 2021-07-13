@@ -40,7 +40,7 @@ public class Auth : MonoBehaviour
         }
     }
 
-    void Start()
+    void Awake()
     {
         Debug.Log("TorusDirectPlugin.init");
         if (Application.platform == RuntimePlatform.Android)
@@ -51,6 +51,18 @@ public class Auth : MonoBehaviour
                 "torusapp://org.torusresearch.torusdirectandroid/redirect"
             );
         }
+
+        Application.deepLinkActivated += onDeepLinkActivated;
+        if (!String.IsNullOrEmpty(Application.absoluteURL))
+        {
+            onDeepLinkActivated(Application.absoluteURL);
+        }
+        DontDestroyOnLoad(gameObject);
+    }
+ 
+    void onDeepLinkActivated(string url)
+    {
+        Debug.Log($"Deep Link Activated: {url}");
     }
 
     private float elapsedTime = 0f;
@@ -64,6 +76,8 @@ public class Auth : MonoBehaviour
         if (elapsedTime > 10)
         {
             Debug.Log("TorusDirectPlugin.triggerLogin");
+            triggeredLogin = true;
+
             if (Application.platform == RuntimePlatform.Android)
             {
                 TorusDirectPlugin.Call("triggerLogin",
@@ -74,7 +88,6 @@ public class Auth : MonoBehaviour
                     "221898609709-obfn3p63741l5333093430j3qeiinaa8.apps.googleusercontent.com"
                 );
             }
-            triggeredLogin = true;
         }
     }
 
@@ -83,11 +96,11 @@ public class Auth : MonoBehaviour
         LoginResponse response = JsonUtility.FromJson<LoginResponse>(message);
         if (response.status == "fulfilled")
         {
-            Debug.Log("Login succeeded");
+            Debug.Log($"Login Succeeded: {response.value.publicAddress}");
         }
         else
         {
-            Debug.Log($"Login failed: {response.reason.name}");
+            Debug.Log($"Login Failed - {response.reason.name}: {response.reason.message}");
         }
     }
 }

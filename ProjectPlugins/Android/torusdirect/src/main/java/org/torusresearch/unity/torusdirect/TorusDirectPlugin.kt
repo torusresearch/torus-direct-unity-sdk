@@ -11,6 +11,7 @@ import kotlinx.coroutines.launch
 import org.json.JSONObject
 import org.torusresearch.torusdirect.TorusDirectSdk
 import org.torusresearch.torusdirect.types.*
+import org.torusresearch.torusdirect.utils.Helpers
 
 val instance = TorusDirectPlugin()
 
@@ -78,8 +79,10 @@ class TorusDirectPlugin internal constructor() {
                     json.put("value", value)
                     UnityPlayer.UnitySendMessage(gameObject, callback, json.toString())
                 }
-            } catch (e: Throwable) {
-                Log.d("${tag}#triggerLogin", "Failed to login")
+            } catch (completionException: Throwable) {
+                val e = Helpers.unwrapCompletionException(completionException)
+                Log.e("${tag}#triggerLogin", "Login failed - ${e}")
+                Log.e("${tag}#triggerLogin", "Login stacktrace - ${e.stackTraceToString()}")
                 launch(Dispatchers.Main) {
                     val json = JSONObject()
                     json.put("status", "rejected")

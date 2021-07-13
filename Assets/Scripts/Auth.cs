@@ -1,6 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
+
+[Serializable]
+public class LoginResult
+{
+    public string privateKey;
+    public string publicAddress;
+}
+
+[Serializable]
+public class LoginException
+{
+    public string name;
+    public string message;
+}
+
+[Serializable]
+public class LoginResponse
+{
+    public string status;
+    public LoginException reason = null;
+    public LoginResult value = null;
+}
 
 public class Auth : MonoBehaviour
 {
@@ -57,7 +78,16 @@ public class Auth : MonoBehaviour
         }
     }
 
-    void OnPostLogin(string message) {
-        Debug.Log($"OnPostLogin: ${message}");
+    void OnPostLogin(string message)
+    {
+        LoginResponse response = JsonUtility.FromJson<LoginResponse>(message);
+        if (response.status == "fulfilled")
+        {
+            Debug.Log("Login succeeded");
+        }
+        else
+        {
+            Debug.Log($"Login failed: {response.reason.name}");
+        }
     }
 }

@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 [Serializable]
 public class LoginResult
@@ -25,6 +26,8 @@ public class LoginResponse
 
 public class Auth : MonoBehaviour
 {
+    public Text accountText;
+
     private static AndroidJavaObject torusDirectPlugin;
 
     public static AndroidJavaObject TorusDirectPlugin
@@ -42,9 +45,9 @@ public class Auth : MonoBehaviour
 
     void Awake()
     {
-        Debug.Log("TorusDirectPlugin.init");
         if (Application.platform == RuntimePlatform.Android)
         {
+            Debug.Log("TorusDirectPlugin.init");
             TorusDirectPlugin.Call("init",
                 "https://scripts.toruswallet.io/redirect.html",
                 "testnet",
@@ -59,48 +62,45 @@ public class Auth : MonoBehaviour
         }
         DontDestroyOnLoad(gameObject);
     }
- 
+
     void onDeepLinkActivated(string url)
     {
         Debug.Log($"Deep Link Activated: {url}");
     }
 
-    private float elapsedTime = 0f;
-    private bool triggeredLogin = false;
-
-    void Update()
+    public void OnClickGoogleLogin()
     {
-        if (triggeredLogin) return;
-
-        elapsedTime += Time.deltaTime;
-        if (elapsedTime > 10)
+        Debug.Log("Logging in with Google");
+        if (Application.platform == RuntimePlatform.Android)
         {
             Debug.Log("TorusDirectPlugin.triggerLogin");
-            triggeredLogin = true;
-
-            if (Application.platform == RuntimePlatform.Android)
-            {
-                TorusDirectPlugin.Call("triggerLogin",
-                    gameObject.name,
-                    "OnPostLogin",
-                    "google",
-                    "google-lrc",
-                    "221898609709-obfn3p63741l5333093430j3qeiinaa8.apps.googleusercontent.com"
-                );
-            }
+            TorusDirectPlugin.Call("triggerLogin",
+                gameObject.name,
+                "OnPostLogin",
+                "google",
+                "google-lrc",
+                "221898609709-obfn3p63741l5333093430j3qeiinaa8.apps.googleusercontent.com"
+            );
         }
     }
 
-    void OnPostLogin(string message)
+    public void OnClickFacebookLogin()
+    {
+        Debug.Log("Logging in with Facebook");
+    }
+
+    public void OnPostLogin(string message)
     {
         LoginResponse response = JsonUtility.FromJson<LoginResponse>(message);
         if (response.status == "fulfilled")
         {
             Debug.Log($"Login Succeeded: {response.value.publicAddress}");
+            accountText.text = response.value.publicAddress;
         }
         else
         {
             Debug.Log($"Login Failed - {response.reason.name}: {response.reason.message}");
+            accountText.text = "Login Failed";
         }
     }
 }

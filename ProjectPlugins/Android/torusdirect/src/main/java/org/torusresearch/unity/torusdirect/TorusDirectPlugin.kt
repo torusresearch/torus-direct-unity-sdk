@@ -7,7 +7,6 @@ import android.util.Log
 import com.unity3d.player.UnityPlayer
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import org.json.JSONObject
 import org.torusresearch.torusdirect.TorusDirectSdk

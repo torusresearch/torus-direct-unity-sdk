@@ -87,6 +87,17 @@ public class Auth : MonoBehaviour
     public void OnClickFacebookLogin()
     {
         Debug.Log("Logging in with Facebook");
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            Debug.Log("TorusDirectPlugin.triggerLogin");
+            TorusDirectPlugin.Call("triggerLogin",
+                gameObject.name,
+                "OnPostLogin",
+                "facebook",
+                "facebook-lrc",
+                "617201755556395"
+            );
+        }
     }
 
     public void OnPostLogin(string message)

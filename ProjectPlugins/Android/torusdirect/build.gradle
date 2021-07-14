@@ -48,7 +48,7 @@ dependencies {
 task copyReleaseToUnityProject(type: Copy) {
     dependsOn assemble
     from 'build/outputs/aar'
-    into '../../../Assets/Plugins/Android'
+    into '../../../Assets/Plugins/Torus/Android'
     include "${project.name}-release.aar"
     rename "${project.name}-release.aar", 'TorusDirect.aar'
 }

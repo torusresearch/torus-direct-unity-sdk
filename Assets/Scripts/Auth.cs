@@ -19,6 +19,8 @@ public class Auth : MonoBehaviour
     public void OnClickGoogleLogin()
     {
         Debug.Log("Logging in with Google");
+
+        accountText.text = "Logging in...";
         TorusDirect.TriggerLogin(
             callbackGameObject: gameObject,
             callbackMethod: "OnPostLogin",
@@ -31,6 +33,8 @@ public class Auth : MonoBehaviour
     public void OnClickFacebookLogin()
     {
         Debug.Log("Logging in with Facebook");
+
+        accountText.text = "Logging in...";
         TorusDirect.TriggerLogin(
             callbackGameObject: gameObject,
             callbackMethod: "OnPostLogin",
@@ -42,16 +46,24 @@ public class Auth : MonoBehaviour
 
     public void OnPostLogin(string message)
     {
-        TorusResponse response = JsonUtility.FromJson<TorusResponse>(message);
-        if (response.status == "fulfilled")
+        try
         {
-            Debug.Log($"Login Succeeded: {response.value.publicAddress}");
-            accountText.text = response.value.publicAddress;
+            TorusCredentials credentials = TorusDirect.ResumeAuth(message);
+            accountText.text = credentials.PublicAddress;
+            Debug.Log($"Login succeeded: {credentials.PublicAddress}");
         }
-        else
+        catch (TorusUserCancelledException)
         {
-            Debug.Log($"Login Failed - {response.reason.name}: {response.reason.message}");
-            accountText.text = "Login Failed";
+            accountText.text = "User cancelled!";
+        }
+        catch (TorusNoAllowedBrowserFoundException)
+        {
+            accountText.text = "No allowed browser!";
+        }
+        catch (TorusException e)
+        {
+            accountText.text = "Something went wrong!";
+            Debug.Log($"Login failed: {e}");
         }
     }
 }

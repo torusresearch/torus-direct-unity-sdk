@@ -69,4 +69,25 @@ public class TorusDirect
             Debug.LogWarning("TorusDirect: Unsupported platform");
         }
     }
+
+    public static TorusCredentials ResumeAuth(string message)
+    {
+        TorusResponse response = JsonUtility.FromJson<TorusResponse>(message);
+        if (response.status == "fulfilled")
+        {
+            return new TorusCredentials(response.value.privateKey, response.value.publicAddress);
+        }
+        else
+        {
+            switch (response.reason.name)
+            {
+                case "UserCancelledException":
+                    throw new TorusUserCancelledException();
+                case "NoAllowedBrowserFoundException":
+                    throw new TorusNoAllowedBrowserFoundException();
+                default:
+                    throw new TorusException(response.reason.name, response.reason.message);
+            }
+        }
+    }
 }

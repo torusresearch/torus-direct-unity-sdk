@@ -28,21 +28,6 @@ public class Auth : MonoBehaviour
 {
     public Text accountText;
 
-    private static AndroidJavaObject torusDirectPlugin;
-
-    public static AndroidJavaObject TorusDirectPlugin
-    {
-        get
-        {
-            if (torusDirectPlugin == null)
-            {
-                AndroidJavaClass cls = new AndroidJavaClass("org.torusresearch.unity.torusdirect.Plugin");
-                torusDirectPlugin = cls.CallStatic<AndroidJavaObject>("getInstance");
-            }
-            return torusDirectPlugin;
-        }
-    }
-
     void Awake()
     {
         TorusDirect.Init(
@@ -67,33 +52,25 @@ public class Auth : MonoBehaviour
     public void OnClickGoogleLogin()
     {
         Debug.Log("Logging in with Google");
-        if (Application.platform == RuntimePlatform.Android)
-        {
-            Debug.Log("TorusDirectPlugin.triggerLogin");
-            TorusDirectPlugin.Call("triggerLogin",
-                gameObject.name,
-                "OnPostLogin",
-                "google",
-                "google-lrc",
-                "221898609709-obfn3p63741l5333093430j3qeiinaa8.apps.googleusercontent.com"
-            );
-        }
+        TorusDirect.TriggerLogin(
+            callbackGameObject: gameObject,
+            callbackMethod: "OnPostLogin",
+            typeOfLogin: TorusTypeOfLogin.google,
+            verifier: "google-lrc",
+            clientId: "221898609709-obfn3p63741l5333093430j3qeiinaa8.apps.googleusercontent.com"
+        );
     }
 
     public void OnClickFacebookLogin()
     {
         Debug.Log("Logging in with Facebook");
-        if (Application.platform == RuntimePlatform.Android)
-        {
-            Debug.Log("TorusDirectPlugin.triggerLogin");
-            TorusDirectPlugin.Call("triggerLogin",
-                gameObject.name,
-                "OnPostLogin",
-                "facebook",
-                "facebook-lrc",
-                "617201755556395"
-            );
-        }
+        TorusDirect.TriggerLogin(
+            callbackGameObject: gameObject,
+            callbackMethod: "OnPostLogin",
+            typeOfLogin: TorusTypeOfLogin.facebook,
+            verifier: "facebook-lrc",
+            clientId: "617201755556395"
+        );
     }
 
     public void OnPostLogin(string message)

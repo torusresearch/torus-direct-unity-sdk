@@ -1,20 +1,35 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class TorusDirect : MonoBehaviour
+public class TorusDirect
 {
-    public static string getNetworkString(TorusNetwork network)
+    public static string GetNetworkString(TorusNetwork network)
     {
         switch (network)
         {
-            case TorusNetwork.Mainnet:
-                return "mainnet";
-            case TorusNetwork.Testnet:
-                return "testnet";
-            default:
-                throw new Exception("Unknown network.");
+            case TorusNetwork.Mainnet: return "mainnet";
+            case TorusNetwork.Testnet: return "testnet";
+            default: throw new Exception("Unknown network.");
+        }
+    }
+
+    public static string GetTypeOfLoginString(TorusTypeOfLogin typeOfLogin)
+    {
+        switch (typeOfLogin)
+        {
+            case TorusTypeOfLogin.google: return "google";
+            case TorusTypeOfLogin.facebook: return "facebook";
+            case TorusTypeOfLogin.reddit: return "reddit";
+            case TorusTypeOfLogin.discord: return "discord";
+            case TorusTypeOfLogin.twitch: return "twitch";
+            case TorusTypeOfLogin.github: return "github";
+            case TorusTypeOfLogin.apple: return "apple";
+            case TorusTypeOfLogin.linkedin: return "linkedin";
+            case TorusTypeOfLogin.twitter: return "twitter";
+            case TorusTypeOfLogin.line: return "line";
+            case TorusTypeOfLogin.email_password: return "email_password";
+            case TorusTypeOfLogin.jwt: return "jwt";
+            default: throw new Exception("Unknown type of login.");
         }
     }
 
@@ -27,7 +42,25 @@ public class TorusDirect : MonoBehaviour
             {
                 using (AndroidJavaObject plugin = cls.CallStatic<AndroidJavaObject>("getInstance"))
                 {
-                    plugin.Call("init", browserRedirectUri.ToString(), getNetworkString(network), redirectUri.ToString());
+                    plugin.Call("init", browserRedirectUri.ToString(), GetNetworkString(network), redirectUri.ToString());
+                }
+            }
+        }
+        else
+        {
+            Debug.LogWarning("TorusDirect: Unsupported platform");
+        }
+    }
+
+    public static void TriggerLogin(GameObject callbackGameObject, string callbackMethod, TorusTypeOfLogin typeOfLogin, string verifier, string clientId)
+    {
+        if (Application.platform == RuntimePlatform.Android)
+        {
+            using (AndroidJavaClass cls = new AndroidJavaClass("org.torusresearch.unity.torusdirect.Plugin"))
+            {
+                using (AndroidJavaObject plugin = cls.CallStatic<AndroidJavaObject>("getInstance"))
+                {
+                    plugin.Call("triggerLogin", callbackGameObject.name, callbackMethod, GetTypeOfLoginString(typeOfLogin), verifier, clientId);
                 }
             }
         }

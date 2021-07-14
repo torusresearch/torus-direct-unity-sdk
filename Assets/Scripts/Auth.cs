@@ -2,28 +2,6 @@ using System;
 using UnityEngine;
 using UnityEngine.UI;
 
-[Serializable]
-public class LoginResult
-{
-    public string privateKey;
-    public string publicAddress;
-}
-
-[Serializable]
-public class LoginException
-{
-    public string name;
-    public string message;
-}
-
-[Serializable]
-public class LoginResponse
-{
-    public string status;
-    public LoginException reason = null;
-    public LoginResult value = null;
-}
-
 public class Auth : MonoBehaviour
 {
     public Text accountText;
@@ -64,7 +42,7 @@ public class Auth : MonoBehaviour
 
     public void OnPostLogin(string message)
     {
-        LoginResponse response = JsonUtility.FromJson<LoginResponse>(message);
+        TorusResponse response = JsonUtility.FromJson<TorusResponse>(message);
         if (response.status == "fulfilled")
         {
             Debug.Log($"Login Succeeded: {response.value.publicAddress}");

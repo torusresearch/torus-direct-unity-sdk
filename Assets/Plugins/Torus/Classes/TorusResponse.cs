@@ -1,23 +1,26 @@
 using System;
 
-[Serializable]
-public class TorusResponse
+namespace Torus
 {
     [Serializable]
-    public class Value
+    public class TorusResponse
     {
-        public string privateKey;
-        public string publicAddress;
-    }
+        [Serializable]
+        public class Value
+        {
+            public string privateKey;
+            public string publicAddress;
+        }
 
-    [Serializable]
-    public class Reason
-    {
-        public string name;
-        public string message;
-    }
+        [Serializable]
+        public class Reason
+        {
+            public string name;
+            public string message;
+        }
 
-    public string status;
-    public Value value = null;
-    public Reason reason = null;
+        public string status;
+        public Value value = null;
+        public Reason reason = null;
+    }
 }

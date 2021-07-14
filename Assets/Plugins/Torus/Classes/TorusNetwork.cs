@@ -1,5 +1,8 @@
-public enum TorusNetwork
+namespace Torus
 {
-    Mainnet,
-    Testnet
+    public enum TorusNetwork
+    {
+        Mainnet,
+        Testnet
+    }
 }

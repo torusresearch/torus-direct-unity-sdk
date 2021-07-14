@@ -1,12 +1,14 @@
-
-public class TorusCredentials
+namespace Torus
 {
-    public string privateKey { get; }
-    public string publicAddress { get; }
-
-    public TorusCredentials(string privateKey, string publicAddress)
+    public class TorusCredentials
     {
-        this.privateKey = privateKey;
-        this.publicAddress = publicAddress;
+        public string privateKey { get; }
+        public string publicAddress { get; }
+
+        public TorusCredentials(string privateKey, string publicAddress)
+        {
+            this.privateKey = privateKey;
+            this.publicAddress = publicAddress;
+        }
     }
 }

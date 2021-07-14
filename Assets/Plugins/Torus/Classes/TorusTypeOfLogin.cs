@@ -1,15 +1,18 @@
-public enum TorusTypeOfLogin
+namespace Torus
 {
-    Google,
-    Facebook,
-    Reddit,
-    Discord,
-    Twitch,
-    Github,
-    Apple,
-    LinkedIn,
-    Twitter,
-    Line,
-    EmailPassword,
-    JWT
+    public enum TorusTypeOfLogin
+    {
+        Google,
+        Facebook,
+        Reddit,
+        Discord,
+        Twitch,
+        Github,
+        Apple,
+        LinkedIn,
+        Twitter,
+        Line,
+        EmailPassword,
+        JWT
+    }
 }

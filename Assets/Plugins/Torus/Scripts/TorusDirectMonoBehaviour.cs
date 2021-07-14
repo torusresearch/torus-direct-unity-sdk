@@ -1,8 +1,9 @@
 using System;
 using UnityEngine;
 using UnityEngine.Events;
+using Torus.Classes;
 
-namespace Torus.Scripts
+namespace Torus
 {
     public class TorusEvent
     {
@@ -16,12 +17,12 @@ namespace Torus.Scripts
         }
     }
 
-    public class TorusDirect : MonoBehaviour
+    public class TorusDirectMonoBehaviour : MonoBehaviour
     {
         public static TorusCredentials credentials { get; private set; }
         public static Exception exception { get; private set; }
 
-        public TorusNetwork network;
+        public TorusNetwork network = TorusNetwork.Testnet;
         public string browserRedirectURI = "https://scripts.toruswallet.io/redirect.html";
         public string appRedirectURI = "torusapp://org.torusresearch.torusdirectandroid/redirect";
         public string googleVerifier = "google-lrc";
@@ -32,9 +33,9 @@ namespace Torus.Scripts
         public UnityEvent onPreLogin;
         public UnityEvent<TorusEvent> onPostLogin;
 
-        void Awake()
+        public virtual void Awake()
         {
-            Classes.TorusDirect.Init(
+            TorusDirect.Init(
                 browserRedirectUri: new Uri(browserRedirectURI),
                 redirectUri: string.IsNullOrEmpty(appRedirectURI) ? null : new Uri(appRedirectURI),
                 network: network
@@ -44,8 +45,8 @@ namespace Torus.Scripts
         public void TriggerLogin(TorusTypeOfLogin typeOfLogin, string verifier, string clientId)
         {
             __OnPreLogin__();
-            Classes.TorusDirect.TriggerLogin(
-                callback: Classes.TorusDirect.Callback(gameObject, "__OnPostLogin__"),
+            TorusDirect.TriggerLogin(
+                callback: TorusDirect.Callback(gameObject, "__OnPostLogin__"),
                 typeOfLogin: typeOfLogin,
                 verifier: verifier,
                 clientId: clientId
@@ -73,7 +74,7 @@ namespace Torus.Scripts
             Exception localException = null;
             try
             {
-                localCredentials = Classes.TorusDirect.ResumeAuth(message);
+                localCredentials = TorusDirect.ResumeAuth(message);
             }
             catch (Exception e)
             {

@@ -13,7 +13,6 @@ public class Auth : MonoBehaviour
             redirectUri: new Uri("torusapp://org.torusresearch.torusdirectandroid/redirect"),
             network: TorusNetwork.Testnet
         );
-        DontDestroyOnLoad(gameObject);
     }
 
     public void OnClickGoogleLogin()

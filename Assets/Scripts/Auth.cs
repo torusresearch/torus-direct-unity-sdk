@@ -45,15 +45,11 @@ public class Auth : MonoBehaviour
 
     void Awake()
     {
-        if (Application.platform == RuntimePlatform.Android)
-        {
-            Debug.Log("TorusDirectPlugin.init");
-            TorusDirectPlugin.Call("init",
-                "https://scripts.toruswallet.io/redirect.html",
-                "testnet",
-                "torusapp://org.torusresearch.torusdirectandroid/redirect"
-            );
-        }
+        TorusDirect.Init(
+            browserRedirectUri: new Uri("https://scripts.toruswallet.io/redirect.html"),
+            redirectUri: new Uri("torusapp://org.torusresearch.torusdirectandroid/redirect"),
+            network: TorusNetwork.Testnet
+        );
 
         Application.deepLinkActivated += onDeepLinkActivated;
         if (!String.IsNullOrEmpty(Application.absoluteURL))

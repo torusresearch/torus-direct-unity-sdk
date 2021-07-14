@@ -21,9 +21,8 @@ public class Auth : MonoBehaviour
 
         accountText.text = "Logging in...";
         TorusDirect.TriggerLogin(
-            callbackGameObject: gameObject,
-            callbackMethod: "OnPostLogin",
-            typeOfLogin: TorusTypeOfLogin.google,
+            callback: TorusDirect.Callback(gameObject, "OnPostLogin"),
+            typeOfLogin: TorusTypeOfLogin.Google,
             verifier: "google-lrc",
             clientId: "221898609709-obfn3p63741l5333093430j3qeiinaa8.apps.googleusercontent.com"
         );
@@ -35,9 +34,8 @@ public class Auth : MonoBehaviour
 
         accountText.text = "Logging in...";
         TorusDirect.TriggerLogin(
-            callbackGameObject: gameObject,
-            callbackMethod: "OnPostLogin",
-            typeOfLogin: TorusTypeOfLogin.facebook,
+            callback: TorusDirect.Callback(gameObject, "OnPostLogin"),
+            typeOfLogin: TorusTypeOfLogin.Facebook,
             verifier: "facebook-lrc",
             clientId: "617201755556395"
         );
@@ -48,8 +46,8 @@ public class Auth : MonoBehaviour
         try
         {
             TorusCredentials credentials = TorusDirect.ResumeAuth(message);
-            accountText.text = credentials.PublicAddress;
-            Debug.Log($"Login succeeded: {credentials.PublicAddress}");
+            accountText.text = credentials.publicAddress;
+            Debug.Log($"Login succeeded: {credentials.publicAddress}");
         }
         catch (TorusUserCancelledException)
         {

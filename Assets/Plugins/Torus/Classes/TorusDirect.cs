@@ -17,20 +17,25 @@ public class TorusDirect
     {
         switch (typeOfLogin)
         {
-            case TorusTypeOfLogin.google: return "google";
-            case TorusTypeOfLogin.facebook: return "facebook";
-            case TorusTypeOfLogin.reddit: return "reddit";
-            case TorusTypeOfLogin.discord: return "discord";
-            case TorusTypeOfLogin.twitch: return "twitch";
-            case TorusTypeOfLogin.github: return "github";
-            case TorusTypeOfLogin.apple: return "apple";
-            case TorusTypeOfLogin.linkedin: return "linkedin";
-            case TorusTypeOfLogin.twitter: return "twitter";
-            case TorusTypeOfLogin.line: return "line";
-            case TorusTypeOfLogin.email_password: return "email_password";
-            case TorusTypeOfLogin.jwt: return "jwt";
+            case TorusTypeOfLogin.Google: return "google";
+            case TorusTypeOfLogin.Facebook: return "facebook";
+            case TorusTypeOfLogin.Reddit: return "reddit";
+            case TorusTypeOfLogin.Discord: return "discord";
+            case TorusTypeOfLogin.Twitch: return "twitch";
+            case TorusTypeOfLogin.Github: return "github";
+            case TorusTypeOfLogin.Apple: return "apple";
+            case TorusTypeOfLogin.LinkedIn: return "linkedin";
+            case TorusTypeOfLogin.Twitter: return "twitter";
+            case TorusTypeOfLogin.Line: return "line";
+            case TorusTypeOfLogin.EmailPassword: return "email_password";
+            case TorusTypeOfLogin.JWT: return "jwt";
             default: throw new Exception("Unknown type of login.");
         }
+    }
+
+    public static TorusCallback Callback(GameObject gameObject, string method)
+    {
+        return new TorusCallback(gameObject, method);
     }
 
     public static void Init(Uri browserRedirectUri, TorusNetwork network, Uri redirectUri = null)
@@ -52,7 +57,7 @@ public class TorusDirect
         }
     }
 
-    public static void TriggerLogin(GameObject callbackGameObject, string callbackMethod, TorusTypeOfLogin typeOfLogin, string verifier, string clientId)
+    public static void TriggerLogin(TorusCallback callback, TorusTypeOfLogin typeOfLogin, string verifier, string clientId)
     {
         if (Application.platform == RuntimePlatform.Android)
         {
@@ -60,7 +65,7 @@ public class TorusDirect
             {
                 using (AndroidJavaObject plugin = cls.CallStatic<AndroidJavaObject>("getInstance"))
                 {
-                    plugin.Call("triggerLogin", callbackGameObject.name, callbackMethod, GetTypeOfLoginString(typeOfLogin), verifier, clientId);
+                    plugin.Call("triggerLogin", callback.gameObject.name, callback.method, GetTypeOfLoginString(typeOfLogin), verifier, clientId);
                 }
             }
         }

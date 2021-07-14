@@ -1,6 +1,6 @@
 using System;
 
-namespace Torus
+namespace Torus.Classes
 {
     [Serializable]
     public class TorusResponse

@@ -547,8 +547,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 963194229}
-        m_TargetAssemblyTypeName: Auth, Assembly-CSharp
-        m_MethodName: OnClickFacebookLogin
+        m_TargetAssemblyTypeName: Torus.Components.TorusDirect, Assembly-CSharp-firstpass
+        m_MethodName: LoginWithFacebook
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -766,6 +766,7 @@ GameObject:
   - component: {fileID: 963194227}
   - component: {fileID: 963194226}
   - component: {fileID: 963194229}
+  - component: {fileID: 963194230}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -847,7 +848,56 @@ MonoBehaviour:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 403365396199e4ff4a0fd3571ef76898, type: 3}
+  m_Script: {fileID: 11500000, guid: 94625cd4ef99a42a4bcdd4e6b2bcf765, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  network: 1
+  browserRedirectURI: https://scripts.toruswallet.io/redirect.html
+  appRedirectURI: torusapp://org.torusresearch.torusdirectandroid/redirect
+  googleVerifier: google-lrc
+  googleClientID: 221898609709-obfn3p63741l5333093430j3qeiinaa8.apps.googleusercontent.com
+  facebookVerifier: facebook-lrc
+  facebookClientID: 617201755556395
+  onPreLogin:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 963194230}
+        m_TargetAssemblyTypeName: LoginHandler, Assembly-CSharp
+        m_MethodName: onPreLogin
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  onPostLogin:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 963194230}
+        m_TargetAssemblyTypeName: LoginHandler, Assembly-CSharp
+        m_MethodName: OnPostLogin
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &963194230
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963194225}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 772b57c3939ab450c8ef461adea12af6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   accountText: {fileID: 616402243}
@@ -935,8 +985,8 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 963194229}
-        m_TargetAssemblyTypeName: Auth, Assembly-CSharp
-        m_MethodName: OnClickGoogleLogin
+        m_TargetAssemblyTypeName: Torus.Components.TorusDirect, Assembly-CSharp-firstpass
+        m_MethodName: LoginWithGoogle
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

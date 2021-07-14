@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Torus
+namespace Torus.Classes
 {
     public class TorusCallback
     {
@@ -13,5 +13,4 @@ namespace Torus
             this.method = method;
         }
     }
-
 }

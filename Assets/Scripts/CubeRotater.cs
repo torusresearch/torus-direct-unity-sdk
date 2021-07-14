@@ -1,15 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class RotateCube : MonoBehaviour
+public class CubeRotater : MonoBehaviour
 {
     public float speed = 30f;
-
-    void Start()
-    {
-
-    }
 
     void Update()
     {

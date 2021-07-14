@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Torus
+namespace Torus.Classes
 {
     public class TorusDirect
     {

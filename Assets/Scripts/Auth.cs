@@ -35,18 +35,7 @@ public class Auth : MonoBehaviour
             redirectUri: new Uri("torusapp://org.torusresearch.torusdirectandroid/redirect"),
             network: TorusNetwork.Testnet
         );
-
-        Application.deepLinkActivated += onDeepLinkActivated;
-        if (!String.IsNullOrEmpty(Application.absoluteURL))
-        {
-            onDeepLinkActivated(Application.absoluteURL);
-        }
         DontDestroyOnLoad(gameObject);
-    }
-
-    void onDeepLinkActivated(string url)
-    {
-        Debug.Log($"Deep Link Activated: {url}");
     }
 
     public void OnClickGoogleLogin()

@@ -34,6 +34,11 @@ Please watch [our tutorial video](https://www.loom.com/share/fe0cf944958943df956
 
 - Select **File**/**Build Settings**/**Android**/**Build** to build the project into an APK and make sure it's working correctly
 
-- Select **Assets**/**Export Package**, unselect **Include dependencies**, check only `Plugins/Torus` and `Scripts/TorusDirect.cs` to export, name the package `TorusDirect.unitypackage`
+- Select **Assets**/**Export Package**, unselect **Include dependencies**, select files to export:
+  - `Plugins/Torus`
+  - `Plugins/Android`
+  - `Scripts/TorusDirect.cs`
+
+- Name the package `TorusDirect.unitypackage`
 
 - Create a new Github release and upload `TorusDirect.unitypackage` as a release artifact

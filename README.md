@@ -4,7 +4,7 @@ Torus CustomAuth (aka TorusDirect) SDK for Unity applications.
 
 ## How to use
 
-Please watch our [quick tutorial video](https://www.loom.com/share/caa9d6b5655c4c2990adcf719e52de74) or [more details tutorial video](https://www.loom.com/share/fe0cf944958943df9567f29ef2c8092f).
+Please watch our [quick tutorial video](https://www.loom.com/share/caa9d6b5655c4c2990adcf719e52de74) or [more in-depth tutorial video](https://www.loom.com/share/fe0cf944958943df9567f29ef2c8092f).
 
 ## Development
 

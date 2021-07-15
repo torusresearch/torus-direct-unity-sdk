@@ -10,7 +10,7 @@ Please watch [our tutorial video](https://www.loom.com/share/fe0cf944958943df956
 
 ### Develop Android native plugin
 
-- Open `ProjectPlugins/Android` using Android Studio
+- Open `ProjectPlugins/Android` in Android Studio
 
 - Make changes to module `torusdirect`
 
@@ -18,7 +18,7 @@ Please watch [our tutorial video](https://www.loom.com/share/fe0cf944958943df956
 
 ### Develop managed C# scripts
 
-- Open the repository with Unity Hub/Editor 2020
+- Open the repository in Unity Hub/Editor 2020
 
 - Make changes to `Assets/Plugins/Torus/**/*` and `Assets/Scripts/TorusDirect.cs`
 
@@ -30,10 +30,10 @@ Please watch [our tutorial video](https://www.loom.com/share/fe0cf944958943df956
 
 ### Release
 
-- Open the repository with Unity Hub/Editor 2020
+- Open the repository in Unity Hub/Editor 2020
 
-- In Unity Edtior, select **File**/**Build Settings**/**Android**/**Build** to build the project into an APK and make sure it's working correctly
+- Select **File**/**Build Settings**/**Android**/**Build** to build the project into an APK and make sure it's working correctly
 
-- In Unity Editor, select **Assets**/**Export Package**, unselect **Include dependencies**, check only `Plugins/Torus` and `Scripts/TorusDirect.cs` to export, name the package `TorusDirect.unitypackage`
+- Select **Assets**/**Export Package**, unselect **Include dependencies**, check only `Plugins/Torus` and `Scripts/TorusDirect.cs` to export, name the package `TorusDirect.unitypackage`
 
 - Create a new Github release and upload `TorusDirect.unitypackage` as a release artifact

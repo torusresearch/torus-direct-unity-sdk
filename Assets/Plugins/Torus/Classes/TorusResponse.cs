@@ -20,7 +20,7 @@ namespace Torus.Classes
         }
 
         public string status;
-        public Value value = null;
-        public Reason reason = null;
+        public Value value;
+        public Reason reason;
     }
 }

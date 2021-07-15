@@ -28,4 +28,12 @@ Please watch [our tutorial video](https://www.loom.com/share/fe0cf944958943df956
 
 - `Assets/Scripts/TorusDirect.cs` is an example script for user to quickly get started
 
-- In Unity Editor, select **Assets**/**Export Package**, unselect **Include dependencies**, check only `Plugins/Torus` and `Scripts/TorusDirect.cs` to export.
+### Release
+
+- Open the repository with Unity Hub/Editor 2020
+
+- In Unity Edtior, select **File**/**Build Settings**/**Android**/**Build** to build the project into an APK and make sure it's working correctly
+
+- In Unity Editor, select **Assets**/**Export Package**, unselect **Include dependencies**, check only `Plugins/Torus` and `Scripts/TorusDirect.cs` to export, name the package `TorusDirect.unitypackage`
+
+- Create a new Github release and upload `TorusDirect.unitypackage` as a release artifact

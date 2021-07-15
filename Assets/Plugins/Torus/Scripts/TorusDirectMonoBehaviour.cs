@@ -32,6 +32,13 @@ namespace Torus
             public string domain;
         }
 
+        [Serializable]
+        public class CustomLoginConfig : DomainSpecificLoginConfig
+        {
+            public string verifierIdField;
+            public bool isVerifierIdCaseSensitive = true;
+        }
+
         public static TorusCredentials credentials { get; private set; }
         public static Exception exception { get; private set; }
 
@@ -94,6 +101,22 @@ namespace Torus
             verifier = "torus-auth0-email-password",
             clientID = "sqKRBVSdwa4WLkaq419U7Bamlh5vK1H7",
             domain = "torus-test.auth0.com"
+        };
+        public CustomLoginConfig loginWithEmailPasswordless = new CustomLoginConfig
+        {
+            verifier = "torus-auth0-passwordless",
+            clientID = "P7PJuBCXIHP41lcyty0NEb7Lgf7Zme8Q",
+            domain = "torus-test.auth0.com",
+            verifierIdField = "name",
+            isVerifierIdCaseSensitive = false
+        };
+        public CustomLoginConfig loginWithSMSPasswordless = new CustomLoginConfig
+        {
+            verifier = "torus-auth0-sms-passwordless",
+            clientID = "nSYBFalV2b1MSg5b2raWqHl63tfH3KQa",
+            domain = "torus-test.auth0.com",
+            verifierIdField = "name",
+            isVerifierIdCaseSensitive = false
         };
 
         public UnityEvent onPreLogin;
@@ -168,6 +191,26 @@ namespace Torus
         public void LoginWithEmailPassword()
         {
             TriggerLogin(TorusTypeOfLogin.EmailPassword, loginWithEmailPassword.verifier, loginWithEmailPassword.clientID, new TorusJWTParams { domain = loginWithEmailPassword.domain });
+        }
+
+        public void LoginWithEmailPasswordless()
+        {
+            TriggerLogin(TorusTypeOfLogin.JWT, loginWithEmailPasswordless.verifier, loginWithEmailPasswordless.clientID, new TorusJWTParams
+            {
+                domain = loginWithEmailPasswordless.domain,
+                verifierIdField = loginWithEmailPasswordless.verifierIdField,
+                isVerifierIdCaseSensitive = loginWithEmailPasswordless.isVerifierIdCaseSensitive
+            });
+        }
+
+        public void LoginWithSMSPasswordless()
+        {
+            TriggerLogin(TorusTypeOfLogin.JWT, loginWithSMSPasswordless.verifier, loginWithSMSPasswordless.clientID, new TorusJWTParams
+            {
+                domain = loginWithSMSPasswordless.domain,
+                verifierIdField = loginWithSMSPasswordless.verifierIdField,
+                isVerifierIdCaseSensitive = loginWithSMSPasswordless.isVerifierIdCaseSensitive
+            });
         }
 
         public void __OnPreLogin__()

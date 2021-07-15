@@ -5,21 +5,21 @@ namespace Torus
     [Serializable]
     public class TorusJWTParams
     {
-        private string domain;
-        private string client_id;
-        private string leeway;
-        private string verifierIdField;
-        private bool isVerifierIdCaseSensitive;
-        private string display;
-        private string prompt;
-        private string max_age;
-        private string ui_locales;
-        private string id_token_hint;
-        private string login_hint;
-        private string acr_values;
-        private string scope;
-        private string audience;
-        private string connection;
-        private object additionalParams;
+        public string domain;
+        public string client_id;
+        public string leeway;
+        public string verifierIdField;
+        public bool isVerifierIdCaseSensitive;
+        public string display;
+        public string prompt;
+        public string max_age;
+        public string ui_locales;
+        public string id_token_hint;
+        public string login_hint;
+        public string acr_values;
+        public string scope;
+        public string audience;
+        public string connection;
+        public object additionalParams;
     }
 }

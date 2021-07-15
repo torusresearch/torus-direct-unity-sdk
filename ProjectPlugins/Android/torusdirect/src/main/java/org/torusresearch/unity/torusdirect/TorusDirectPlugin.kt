@@ -103,6 +103,75 @@ class TorusDirectPlugin internal constructor() {
         }
     }
 
+    fun getTorusKey(
+        callbackGameObject: String,
+        callbackMethod: String,
+        paramsString: String
+    ) {
+        if (args == null) throw Exception("TorusDirect.init must be called before getTorusKey.")
+
+        val activity = UnityPlayer.currentActivity
+        Log.d(
+            "${tag}#getTorusKey", arrayOf(
+                "callbackGameObject=$callbackGameObject",
+                "callbackMethod=$callbackMethod",
+                "params=$paramsString",
+                "activity=${activity::class.qualifiedName}"
+            ).joinToString(" ")
+        )
+
+        val paramsJSON = JSONObject(paramsString)
+        CoroutineScope(Dispatchers.Default).launch {
+            try {
+                val sdk = TorusDirectSdk(args, activity)
+                Log.d("${tag}#getTorusKey", "Initialized TorusDirect SDK successfully")
+
+                val verifierParamsMap = hashMapOf<String, Any>()
+                val verifierParamsJSON = paramsJSON.getJSONObject("verifierParams")
+                for (key in verifierParamsJSON.keys())
+                    verifierParamsMap[key] = verifierParamsJSON.get(key)
+
+                val result = sdk.getTorusKey(
+                    paramsJSON.getString("verifier"),
+                    paramsJSON.getString("verifierId"),
+                    verifierParamsMap,
+                    paramsJSON.getString("idToken")
+                ).join()
+                Log.d("${tag}#getTorusKey", "Got Torus key successfully")
+                launch(Dispatchers.Main) {
+                    val json = JSONObject()
+                    json.put("status", "fulfilled")
+                    val value = JSONObject()
+                    value.put("privateKey", result.privateKey)
+                    value.put("publicAddress", result.publicAddress)
+                    json.put("value", value)
+                    UnityPlayer.UnitySendMessage(
+                        callbackGameObject,
+                        callbackMethod,
+                        json.toString()
+                    )
+                }
+            } catch (completionException: Throwable) {
+                val e = Helpers.unwrapCompletionException(completionException)
+                Log.e("${tag}#triggerLogin", "Login failed - ${e}")
+                Log.e("${tag}#triggerLogin", "Login stacktrace - ${e.stackTraceToString()}")
+                launch(Dispatchers.Main) {
+                    val json = JSONObject()
+                    json.put("status", "rejected")
+                    val reason = JSONObject()
+                    reason.put("name", e::class.simpleName)
+                    reason.put("message", e.message)
+                    json.put("reason", reason)
+                    UnityPlayer.UnitySendMessage(
+                        callbackGameObject,
+                        callbackMethod,
+                        json.toString()
+                    )
+                }
+            }
+        }
+    }
+
     private fun mapJwtParams(jwtParams: JSONObject?): Auth0ClientOptions? {
         if (jwtParams == null || !jwtParams.has("domain")) {
             return Auth0ClientOptions.Auth0ClientOptionsBuilder("").build()

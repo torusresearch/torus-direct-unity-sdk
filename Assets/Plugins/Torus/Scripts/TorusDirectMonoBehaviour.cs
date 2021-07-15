@@ -143,6 +143,18 @@ namespace Torus
             );
         }
 
+        public void GetTorusKey(TorusCallback callback, string verifier, string verifierId, string idToken, TorusVerifierParams verifierParams = null)
+        {
+            __OnPreLogin__();
+            TorusDirect.GetTorusKey(
+                callback: TorusDirect.Callback(gameObject, "__onPostLogin__"),
+                verifier: verifier,
+                verifierId: verifierId,
+                verifierParams: verifierParams,
+                idToken: idToken
+            );
+        }
+
         public void LoginWithGoogle()
         {
             TriggerLogin(TorusTypeOfLogin.Google, loginWithGoogle.verifier, loginWithGoogle.clientID);

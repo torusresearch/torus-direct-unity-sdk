@@ -94,6 +94,44 @@ namespace Torus.Classes
             }
         }
 
+        [Serializable]
+        public class GetTorusKeyParams
+        {
+            public string verifier;
+            public string verifierId;
+            public TorusVerifierParams verifierParams;
+            public string idToken;
+        }
+
+        public static void GetTorusKey(TorusCallback callback, string verifier, string verifierId, string idToken, TorusVerifierParams verifierParams = null)
+        {
+            if (Application.platform == RuntimePlatform.Android)
+            {
+                using (AndroidJavaClass cls = new AndroidJavaClass("org.torusresearch.unity.torusdirect.Plugin"))
+                {
+                    using (AndroidJavaObject plugin = cls.CallStatic<AndroidJavaObject>("getInstance"))
+                    {
+                        TorusVerifierParams mergedVerifierParams = verifierParams != null ? verifierParams : new TorusVerifierParams();
+                        if (string.IsNullOrEmpty(mergedVerifierParams.verifier_id)) mergedVerifierParams.verifier_id = verifierId;
+
+                        plugin.Call("getTorusKey", callback.gameObject.name, callback.method,
+                            JsonUtility.ToJson(new GetTorusKeyParams
+                            {
+                                verifier = verifier,
+                                verifierId = verifierId,
+                                verifierParams = mergedVerifierParams,
+                                idToken = idToken
+                            })
+                        );
+                    }
+                }
+            }
+            else
+            {
+                Debug.LogWarning("TorusDirect: Unsupported platform");
+            }
+        }
+
         public static TorusCredentials ResumeAuth(string message)
         {
             TorusResponse response = JsonUtility.FromJson<TorusResponse>(message);

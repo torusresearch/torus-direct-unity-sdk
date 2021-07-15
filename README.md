@@ -28,7 +28,7 @@ Please watch [our tutorial video](https://www.loom.com/share/fe0cf944958943df956
 
 - `Assets/Scripts/TorusDirect.cs` is an example script for user to quickly get started
 
-### Release
+### Release new version
 
 - Open the repository in Unity Hub/Editor 2020
 

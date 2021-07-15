@@ -35,26 +35,23 @@ class TorusDirectPlugin internal constructor() {
     }
 
     fun triggerLogin(
-        gameObject: String,
-        callback: String,
-        typeOfLogin: String,
-        verifier: String,
-        clientId: String
+        callbackGameObject: String,
+        callbackMethod: String,
+        paramsString: String
     ) {
         if (args == null) throw Exception("TorusDirect.init must be called before triggerLogin.")
 
         val activity = UnityPlayer.currentActivity
         Log.d(
             "${tag}#triggerLogin", arrayOf(
-                "gameObject=$gameObject",
-                "callback=$callback",
-                "typeOfLogin=$typeOfLogin",
-                "verifier=$verifier",
-                "clientId=$clientId",
-                "activity=${activity.packageName}"
+                "callbackGameObject=$callbackGameObject",
+                "callbackMethod=$callbackMethod",
+                "params=$paramsString",
+                "activity=${activity::class.qualifiedName}"
             ).joinToString(" ")
         )
 
+        val paramsJSON = JSONObject(paramsString)
         CoroutineScope(Dispatchers.Default).launch {
             try {
                 val sdk = TorusDirectSdk(args, activity)
@@ -62,10 +59,10 @@ class TorusDirectPlugin internal constructor() {
 
                 val result = sdk.triggerLogin(
                     SubVerifierDetails(
-                        LoginType.valueOfLabel(typeOfLogin),
-                        verifier,
-                        clientId,
-                        Auth0ClientOptions.Auth0ClientOptionsBuilder("").build(),
+                        LoginType.valueOfLabel(paramsJSON.getString("typeOfLogin")),
+                        paramsJSON.getString("verifier"),
+                        paramsJSON.getString("clientId"),
+                        mapJwtParams(paramsJSON.getJSONObject("jwtParams")),
                         activity == null
                     )
                 ).join()
@@ -77,12 +74,18 @@ class TorusDirectPlugin internal constructor() {
                     value.put("privateKey", result.privateKey)
                     value.put("publicAddress", result.publicAddress)
                     json.put("value", value)
-                    UnityPlayer.UnitySendMessage(gameObject, callback, json.toString())
+                    UnityPlayer.UnitySendMessage(
+                        callbackGameObject,
+                        callbackMethod,
+                        json.toString()
+                    )
                 }
             } catch (completionException: Throwable) {
                 val e = Helpers.unwrapCompletionException(completionException)
-                Log.e("${tag}#triggerLogin", "Login failed - ${e}")
-                Log.e("${tag}#triggerLogin", "Login stacktrace - ${e.stackTraceToString()}")
+                if (e !is UserCancelledException && e !is NoAllowedBrowserFoundException) {
+                    Log.e("${tag}#triggerLogin", "Login failed - ${e}")
+                    Log.e("${tag}#triggerLogin", "Login stacktrace - ${e.stackTraceToString()}")
+                }
                 launch(Dispatchers.Main) {
                     val json = JSONObject()
                     json.put("status", "rejected")
@@ -90,9 +93,70 @@ class TorusDirectPlugin internal constructor() {
                     reason.put("name", e::class.simpleName)
                     reason.put("message", e.message)
                     json.put("reason", reason)
-                    UnityPlayer.UnitySendMessage(gameObject, callback, json.toString())
+                    UnityPlayer.UnitySendMessage(
+                        callbackGameObject,
+                        callbackMethod,
+                        json.toString()
+                    )
                 }
             }
         }
+    }
+
+    private fun mapJwtParams(jwtParams: JSONObject?): Auth0ClientOptions? {
+        if (jwtParams == null || !jwtParams.has("domain")) {
+            return Auth0ClientOptions.Auth0ClientOptionsBuilder("").build()
+        }
+        val builder = Auth0ClientOptions.Auth0ClientOptionsBuilder(jwtParams.getString("domain"))
+        if (jwtParams.has("isVerifierIdCaseSensitive")) {
+            builder.setVerifierIdCaseSensitive(jwtParams.getBoolean("isVerifierIdCaseSensitive"))
+        }
+        if (jwtParams.has("client_id")) {
+            builder.setClient_id(jwtParams.getString("client_id"))
+        }
+        if (jwtParams.has("leeway")) {
+            builder.setLeeway(jwtParams.getString("leeway"))
+        }
+        if (jwtParams.has("verifierIdField")) {
+            builder.setVerifierIdField(jwtParams.getString("verifierIdField"))
+        }
+        if (jwtParams.has("display")) {
+            builder.setDisplay(Display.valueOfLabel(jwtParams.getString("display")))
+        }
+        if (jwtParams.has("prompt")) {
+            builder.setPrompt(Prompt.valueOfLabel(jwtParams.getString("prompt")))
+        }
+        if (jwtParams.has("max_age")) {
+            builder.setMax_age(jwtParams.getString("max_age"))
+        }
+        if (jwtParams.has("ui_locales")) {
+            builder.setUi_locales(jwtParams.getString("ui_locales"))
+        }
+        if (jwtParams.has("id_token_hint")) {
+            builder.setId_token_hint(jwtParams.getString("id_token_hint"))
+        }
+        if (jwtParams.has("login_hint")) {
+            builder.setLogin_hint(jwtParams.getString("login_hint"))
+        }
+        if (jwtParams.has("acr_values")) {
+            builder.setAcr_values(jwtParams.getString("acr_values"))
+        }
+        if (jwtParams.has("scope")) {
+            builder.setScope(jwtParams.getString("scope"))
+        }
+        if (jwtParams.has("audience")) {
+            builder.setAudience(jwtParams.getString("audience"))
+        }
+        if (jwtParams.has("connection")) {
+            builder.setConnection(jwtParams.getString("connection"))
+        }
+        if (jwtParams.has("additionalParams")) {
+            val additionalParamsMap = hashMapOf<String, String>()
+            val additionalParamsJSON = jwtParams.getJSONObject("additionalParams")
+            for (key in additionalParamsJSON.keys())
+                additionalParamsMap[key] = additionalParamsJSON.getString(key)
+            builder.setAdditionalParams(additionalParamsMap)
+        }
+        return builder.build()
     }
 }

@@ -59,7 +59,16 @@ namespace Torus.Classes
             }
         }
 
-        public static void TriggerLogin(TorusCallback callback, TorusTypeOfLogin typeOfLogin, string verifier, string clientId)
+        [Serializable]
+        public class TriggerLoginParams
+        {
+            public string typeOfLogin;
+            public string verifier;
+            public string clientId;
+            public TorusJWTParams jwtParams;
+        }
+
+        public static void TriggerLogin(TorusCallback callback, TorusTypeOfLogin typeOfLogin, string verifier, string clientId, TorusJWTParams jwtParams = null)
         {
             if (Application.platform == RuntimePlatform.Android)
             {
@@ -67,7 +76,15 @@ namespace Torus.Classes
                 {
                     using (AndroidJavaObject plugin = cls.CallStatic<AndroidJavaObject>("getInstance"))
                     {
-                        plugin.Call("triggerLogin", callback.gameObject.name, callback.method, GetTypeOfLoginString(typeOfLogin), verifier, clientId);
+                        plugin.Call("triggerLogin", callback.gameObject.name, callback.method,
+                            JsonUtility.ToJson(new TriggerLoginParams
+                            {
+                                typeOfLogin = GetTypeOfLoginString(typeOfLogin),
+                                verifier = verifier,
+                                clientId = clientId,
+                                jwtParams = jwtParams
+                            })
+                        );
                     }
                 }
             }

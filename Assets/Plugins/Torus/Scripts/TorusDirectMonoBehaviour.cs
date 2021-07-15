@@ -55,14 +55,15 @@ namespace Torus
             );
         }
 
-        public void TriggerLogin(TorusTypeOfLogin typeOfLogin, string verifier, string clientId)
+        public void TriggerLogin(TorusTypeOfLogin typeOfLogin, string verifier, string clientId, TorusJWTParams jwtParams = null)
         {
             __OnPreLogin__();
             TorusDirect.TriggerLogin(
                 callback: TorusDirect.Callback(gameObject, "__OnPostLogin__"),
                 typeOfLogin: typeOfLogin,
                 verifier: verifier,
-                clientId: clientId
+                clientId: clientId,
+                jwtParams: jwtParams
             );
         }
 

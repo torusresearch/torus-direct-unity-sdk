@@ -9,9 +9,9 @@ namespace Torus.Classes
 
 #if UNITY_IOS && !UNITY_EDITOR
         [DllImport("__Internal")]
-        private static extern void TorusDirect_iOS_ShowAlert(string title, string message);
+        private static extern void TorusDirect_iOS_init();
 #else
-        private static void TorusDirect_iOS_ShowAlert(string title, string message)
+        private static void TorusDirect_iOS_init()
         {
             throw new Exception("TorusDirect: Calling iOS method in a non-iOS platform.");
         }
@@ -67,7 +67,7 @@ namespace Torus.Classes
             }
             else if (Application.platform == RuntimePlatform.IPhonePlayer)
             {
-                TorusDirect_iOS_ShowAlert("Couldn't login", "iOS platform is not supported. It's coming soon!");
+                TorusDirect_iOS_init();
             }
             else
             {
@@ -103,10 +103,6 @@ namespace Torus.Classes
                         );
                     }
                 }
-            }
-            else if (Application.platform == RuntimePlatform.IPhonePlayer)
-            {
-                TorusDirect_iOS_ShowAlert("Couldn't login", "iOS platform is not supported. It's coming soon!");
             }
             else
             {
@@ -145,10 +141,6 @@ namespace Torus.Classes
                         );
                     }
                 }
-            }
-            else if (Application.platform == RuntimePlatform.IPhonePlayer)
-            {
-                TorusDirect_iOS_ShowAlert("Couldn't login", "iOS platform is not supported. It's coming soon!");
             }
             else
             {

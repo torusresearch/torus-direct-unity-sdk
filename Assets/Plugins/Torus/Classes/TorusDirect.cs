@@ -1,10 +1,22 @@
 using System;
+using System.Runtime.InteropServices;
 using UnityEngine;
 
 namespace Torus.Classes
 {
     public class TorusDirect
     {
+
+#if UNITY_IOS && !UNITY_EDITOR
+        [DllImport("__Internal")]
+        private static extern void TorusDirect_iOS_ShowAlert(string title, string message);
+#else
+        private static void TorusDirect_iOS_ShowAlert(string title, string message)
+        {
+            throw new Exception("TorusDirect: Calling iOS method in a non-iOS platform.");
+        }
+#endif
+
         public static string GetNetworkString(TorusNetwork network)
         {
             switch (network)
@@ -53,6 +65,10 @@ namespace Torus.Classes
                     }
                 }
             }
+            else if (Application.platform == RuntimePlatform.IPhonePlayer)
+            {
+                TorusDirect_iOS_ShowAlert("Couldn't login", "iOS platform is not supported. It's coming soon!");
+            }
             else
             {
                 Debug.LogWarning("TorusDirect: Unsupported platform");
@@ -87,6 +103,10 @@ namespace Torus.Classes
                         );
                     }
                 }
+            }
+            else if (Application.platform == RuntimePlatform.IPhonePlayer)
+            {
+                TorusDirect_iOS_ShowAlert("Couldn't login", "iOS platform is not supported. It's coming soon!");
             }
             else
             {
@@ -125,6 +145,10 @@ namespace Torus.Classes
                         );
                     }
                 }
+            }
+            else if (Application.platform == RuntimePlatform.IPhonePlayer)
+            {
+                TorusDirect_iOS_ShowAlert("Couldn't login", "iOS platform is not supported. It's coming soon!");
             }
             else
             {

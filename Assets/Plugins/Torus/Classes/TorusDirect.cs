@@ -6,12 +6,17 @@ namespace Torus.Classes
 {
     public class TorusDirect
     {
-
 #if UNITY_IOS && !UNITY_EDITOR
         [DllImport("__Internal")]
-        private static extern void TorusDirect_iOS_init();
+        private static extern void TorusDirect_iOS_init(string browserRedirectUri, string network, string redirectUri);
+        [DllImport("__Internal")]
+        private static extern void TorusDirect_iOS_triggerLogin(string callbackGameObject, string callbackMethod);
 #else
-        private static void TorusDirect_iOS_init()
+        private static void TorusDirect_iOS_init(string browserRedirectUri, string network, string redirectUri)
+        {
+            throw new Exception("TorusDirect: Calling iOS method in a non-iOS platform.");
+        }
+        private static void TorusDirect_iOS_triggerLogin(string callbackGameObject, string callbackMethod)
         {
             throw new Exception("TorusDirect: Calling iOS method in a non-iOS platform.");
         }
@@ -61,13 +66,13 @@ namespace Torus.Classes
                 {
                     using (AndroidJavaObject plugin = cls.CallStatic<AndroidJavaObject>("getInstance"))
                     {
-                        plugin.Call("init", browserRedirectUri.ToString(), GetNetworkString(network), redirectUri.ToString());
+                        plugin.Call("init", browserRedirectUri.ToString(), GetNetworkString(network), mergedRedirectUri.ToString());
                     }
                 }
             }
             else if (Application.platform == RuntimePlatform.IPhonePlayer)
             {
-                TorusDirect_iOS_init();
+                TorusDirect_iOS_init(browserRedirectUri.ToString(), GetNetworkString(network), mergedRedirectUri.ToString());
             }
             else
             {
@@ -103,6 +108,10 @@ namespace Torus.Classes
                         );
                     }
                 }
+            }
+            else if (Application.platform == RuntimePlatform.IPhonePlayer)
+            {
+                TorusDirect_iOS_triggerLogin(callback.gameObject.name, callback.method);
             }
             else
             {

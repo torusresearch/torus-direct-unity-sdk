@@ -4,9 +4,9 @@ import Foundation
 {
     @objc public static let shared = TorusDirectUnity()
 
-    @objc public func initialize()
+    @objc public func initialize(browserRedirectUri: String, network: String, redirectUri: String)
     {
-        print("TorusDirectUnity.initialize")
+        print("TorusDirectUnity.initialize: browserRedirectUri=\(browserRedirectUri), network=\(network), redirectUri=\(redirectUri)")
     }
 
     @objc public func triggerLogin(callbackGameObject: String, callbackMethod: String) {

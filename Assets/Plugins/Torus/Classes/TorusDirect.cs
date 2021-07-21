@@ -8,15 +8,15 @@ namespace Torus.Classes
     {
 #if UNITY_IOS && !UNITY_EDITOR
         [DllImport("__Internal")]
-        private static extern void TorusDirect_iOS_init(string browserRedirectUri, string network, string redirectUri);
+        private static extern void TorusDirect_iOS_init(string browserRedirectUri, string network, string redirectUri, string browserType);
         [DllImport("__Internal")]
-        private static extern void TorusDirect_iOS_triggerLogin(string callbackGameObject, string callbackMethod);
+        private static extern void TorusDirect_iOS_triggerLogin(string callbackGameObject, string callbackMethod, string json);
 #else
-        private static void TorusDirect_iOS_init(string browserRedirectUri, string network, string redirectUri)
+        private static void TorusDirect_iOS_init(string browserRedirectUri, string network, string redirectUri, string browserType)
         {
             throw new Exception("TorusDirect: Calling iOS method in a non-iOS platform.");
         }
-        private static void TorusDirect_iOS_triggerLogin(string callbackGameObject, string callbackMethod)
+        private static void TorusDirect_iOS_triggerLogin(string callbackGameObject, string callbackMethod, string json)
         {
             throw new Exception("TorusDirect: Calling iOS method in a non-iOS platform.");
         }
@@ -72,7 +72,7 @@ namespace Torus.Classes
             }
             else if (Application.platform == RuntimePlatform.IPhonePlayer)
             {
-                TorusDirect_iOS_init(browserRedirectUri.ToString(), GetNetworkString(network), mergedRedirectUri.ToString());
+                TorusDirect_iOS_init(browserRedirectUri.ToString(), GetNetworkString(network), mergedRedirectUri.ToString(), "external");
             }
             else
             {
@@ -111,7 +111,15 @@ namespace Torus.Classes
             }
             else if (Application.platform == RuntimePlatform.IPhonePlayer)
             {
-                TorusDirect_iOS_triggerLogin(callback.gameObject.name, callback.method);
+                TorusDirect_iOS_triggerLogin(callback.gameObject.name, callback.method,
+                    JsonUtility.ToJson(new TriggerLoginParams
+                    {
+                        typeOfLogin = GetTypeOfLoginString(typeOfLogin),
+                        verifier = verifier,
+                        clientId = clientId,
+                        jwtParams = jwtParams
+                    })
+                );
             }
             else
             {

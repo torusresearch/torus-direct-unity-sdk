@@ -124,11 +124,19 @@ namespace Torus
 
         public virtual void Awake()
         {
+            Application.deepLinkActivated += __onDeepLink__;
+            if (!string.IsNullOrEmpty(Application.absoluteURL)) __onDeepLink__(Application.absoluteURL);
+
             TorusDirect.Init(
                 browserRedirectUri: new Uri(browserRedirectURL),
                 redirectUri: string.IsNullOrEmpty(appRedirectURI) ? null : new Uri(appRedirectURI),
                 network: network
             );
+        }
+
+        public virtual void OnDestroy()
+        {
+            Application.deepLinkActivated -= __onDeepLink__;
         }
 
         public void TriggerLogin(TorusTypeOfLogin typeOfLogin, string verifier, string clientId, TorusJWTParams jwtParams = null)
@@ -223,6 +231,11 @@ namespace Torus
                 verifierIdField = loginWithSMSPasswordless.verifierIdField,
                 isVerifierIdCaseSensitive = loginWithSMSPasswordless.isVerifierIdCaseSensitive
             });
+        }
+
+        private void __onDeepLink__(string url)
+        {
+            TorusDirect.HandleURL(url);
         }
 
         public void __OnPreLogin__()

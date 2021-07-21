@@ -56,6 +56,11 @@ struct TorusDirectUnityError: Codable {
         print("TorusDirectUnity.initialize: browserRedirectUri=\(browserRedirectUri), network=\(network), redirectUri=\(redirectUri), browserType=\(browserType)")
         self.initArgs = TorusDirectUnityInitArgs(network: network, browserRedirectUri: browserRedirectUri, redirectUri: redirectUri, browserType: browserType)
     }
+    
+    @objc public func handleURL(_ urlString: String) {
+        guard let url = URL(string: urlString) else { return }
+        TorusSwiftDirectSDK.handle(url: url)
+    }
 
     @objc public func triggerLogin(callbackGameObject: String, callbackMethod: String, json: String) {
         print("TorusDirectUnity.triggerLogin")

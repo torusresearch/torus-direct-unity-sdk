@@ -13,6 +13,8 @@ namespace Torus.Classes
         private static extern void TorusDirect_iOS_handleURL(string url);
         [DllImport("__Internal")]
         private static extern void TorusDirect_iOS_triggerLogin(string callbackGameObject, string callbackMethod, string json);
+        [DllImport("__Internal")]
+        private static extern void TorusDirect_iOS_getTorusKey(string callbackGameObject, string callbackMethod, string json);
 #else
         private static void TorusDirect_iOS_init(string browserRedirectUri, string network, string redirectUri, string browserType)
         {
@@ -23,6 +25,10 @@ namespace Torus.Classes
             throw new Exception("TorusDirect: Calling iOS method in a non-iOS platform.");
         }
         private static void TorusDirect_iOS_triggerLogin(string callbackGameObject, string callbackMethod, string json)
+        {
+            throw new Exception("TorusDirect: Calling iOS method in a non-iOS platform.");
+        }
+        private static void TorusDirect_iOS_getTorusKey(string callbackGameObject, string callbackMethod, string json)
         {
             throw new Exception("TorusDirect: Calling iOS method in a non-iOS platform.");
         }
@@ -152,15 +158,15 @@ namespace Torus.Classes
 
         public static void GetTorusKey(TorusCallback callback, string verifier, string verifierId, string idToken, TorusVerifierParams verifierParams = null)
         {
+            TorusVerifierParams mergedVerifierParams = verifierParams != null ? verifierParams : new TorusVerifierParams();
+            if (string.IsNullOrEmpty(mergedVerifierParams.verifier_id)) mergedVerifierParams.verifier_id = verifierId;
+
             if (Application.platform == RuntimePlatform.Android)
             {
                 using (AndroidJavaClass cls = new AndroidJavaClass("org.torusresearch.unity.torusdirect.Plugin"))
                 {
                     using (AndroidJavaObject plugin = cls.CallStatic<AndroidJavaObject>("getInstance"))
                     {
-                        TorusVerifierParams mergedVerifierParams = verifierParams != null ? verifierParams : new TorusVerifierParams();
-                        if (string.IsNullOrEmpty(mergedVerifierParams.verifier_id)) mergedVerifierParams.verifier_id = verifierId;
-
                         plugin.Call("getTorusKey", callback.gameObject.name, callback.method,
                             JsonUtility.ToJson(new GetTorusKeyParams
                             {
@@ -172,6 +178,18 @@ namespace Torus.Classes
                         );
                     }
                 }
+            }
+            else if (Application.platform == RuntimePlatform.IPhonePlayer)
+            {
+                TorusDirect_iOS_getTorusKey(callback.gameObject.name, callback.method,
+                    JsonUtility.ToJson(new GetTorusKeyParams
+                    {
+                        verifier = verifier,
+                        verifierId = verifierId,
+                        verifierParams = mergedVerifierParams,
+                        idToken = idToken
+                    })
+                );
             }
             else
             {

@@ -124,19 +124,29 @@ namespace Torus
 
         public virtual void Awake()
         {
-            Application.deepLinkActivated += __onDeepLink__;
-            if (!string.IsNullOrEmpty(Application.absoluteURL)) __onDeepLink__(Application.absoluteURL);
+            if (Application.platform == RuntimePlatform.IPhonePlayer)
+            {
+                Application.deepLinkActivated += __onDeepLink__;
+            }
 
             TorusDirect.Init(
                 browserRedirectUri: new Uri(browserRedirectURL),
                 redirectUri: string.IsNullOrEmpty(appRedirectURI) ? null : new Uri(appRedirectURI),
                 network: network
             );
+
+            if (Application.platform == RuntimePlatform.IPhonePlayer)
+            {
+                if (!string.IsNullOrEmpty(Application.absoluteURL)) __onDeepLink__(Application.absoluteURL);
+            }
         }
 
         public virtual void OnDestroy()
         {
-            Application.deepLinkActivated -= __onDeepLink__;
+            if (Application.platform == RuntimePlatform.IPhonePlayer)
+            {
+                Application.deepLinkActivated -= __onDeepLink__;
+            }
         }
 
         public void TriggerLogin(TorusTypeOfLogin typeOfLogin, string verifier, string clientId, TorusJWTParams jwtParams = null)

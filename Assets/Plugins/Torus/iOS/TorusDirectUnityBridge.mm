@@ -13,4 +13,8 @@ extern "C"
     {
         [[TorusDirectUnity shared] triggerLoginWithCallbackGameObject:[NSString stringWithUTF8String:callbackGameObject] callbackMethod:[NSString stringWithUTF8String:callbackMethod] json:[NSString stringWithUTF8String:json]];
     }
+    void TorusDirect_iOS_getTorusKey(const char* callbackGameObject, const char* callbackMethod, const char* json)
+    {
+        [[TorusDirectUnity shared] getTorusKeyWithCallbackGameObject:[NSString stringWithUTF8String:callbackGameObject] callbackMethod:[NSString stringWithUTF8String:callbackMethod] json:[NSString stringWithUTF8String:json]];
+    }
 }

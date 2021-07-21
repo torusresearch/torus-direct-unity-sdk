@@ -8,13 +8,6 @@ struct TorusDirectUnityInitArgs {
     let browserType: String;
 }
 
-struct TorusDirectUnityTriggerLoginArgs : Decodable {
-    let typeOfLogin: String;
-    let verifier: String;
-    let clientId: String;
-    var jwtParams: Dictionary<String, String>? = nil;
-}
-
 struct TorusDirectUnityResponse: Codable {
     let status: String;
     let reason: TorusDirectUnityError?;
@@ -71,7 +64,6 @@ struct TorusDirectUnityError: Codable {
             return
         }
         
-        print(json)
         guard
             let jsonData = json.data(using: .utf8),
             let args = try? JSONSerialization.jsonObject(with: jsonData, options: []) as? Dictionary<String, Any>,
@@ -111,6 +103,56 @@ struct TorusDirectUnityError: Codable {
             self.sendResult(callbackGameObject: callbackGameObject, callbackMethod: callbackMethod, value: ["privateKey": privateKey, "publicAddress": publicAddress])
         }.catch { err in
             self.sendError(callbackGameObject: callbackGameObject, callbackMethod: callbackMethod, name: "LoginException", message: "\(err)")
+        }
+    }
+    
+    @objc public func getTorusKey(callbackGameObject: String, callbackMethod: String, json: String) {
+        print("TorusDirectUnity.getTorusKey")
+        
+        guard let initArgs = initArgs
+        else {
+            sendError(callbackGameObject: callbackGameObject, callbackMethod: callbackMethod, name: "NotInitializedException", message: "TorusDirect.Init must be called before GetTorusKey.")
+            return
+        }
+        
+        guard
+            let jsonData = json.data(using: .utf8),
+            let args = try? JSONSerialization.jsonObject(with: jsonData, options: []) as? Dictionary<String, Any>,
+            let verifier = args["verifier"] as? String,
+            let verifierId = args["verifierId"] as? String,
+            let idToken = args["idToken"] as? String,
+            let verifierParams = args["verifierParams"] as? Dictionary<String, String>
+        else {
+            sendError(callbackGameObject: callbackGameObject, callbackMethod: callbackMethod, name: "ArgumentException", message: "Missing or invalid argument(s).")
+            return
+        }
+        
+        let subVerifierDetails = SubVerifierDetails(
+            loginType: .web,
+            loginProvider: .jwt,
+            clientId: "<empty>",
+            verifierName: verifier,
+            redirectURL: initArgs.redirectUri,
+            browserRedirectURL: initArgs.browserRedirectUri,
+            extraQueryParams: [:],
+            jwtParams: [:]
+        )
+        let torusDirectSdk = TorusSwiftDirectSDK(
+            aggregateVerifierType: .singleLogin,
+            aggregateVerifierName: verifier,
+            subVerifierDetails: [subVerifierDetails]
+        )
+        torusDirectSdk.getTorusKey(verifier: verifier, verifierId: verifierId, idToken: idToken, userData: verifierParams).done { data in
+            guard
+                let privateKey = data["privateKey"] as? String,
+                let publicAddress = data["publicAddress"] as? String
+            else {
+                self.sendError(callbackGameObject: callbackGameObject, callbackMethod: callbackMethod, name: "InternalException", message: "Failed to retrieve keypair from getTorusKey result.")
+                return
+            }
+            self.sendResult(callbackGameObject: callbackGameObject, callbackMethod: callbackMethod, value: ["privateKey": privateKey, "publicAddress": publicAddress])
+        }.catch { err in
+            self.sendError(callbackGameObject: callbackGameObject, callbackMethod: callbackMethod, name: "GetKeyException", message: "\(err)")
         }
     }
 }

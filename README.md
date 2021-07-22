@@ -60,6 +60,16 @@ When you change `appRedirectUri` in `TorusDirect` component, make sure to update
 
 - Run `build` task, which will compile the module into an AAR and automatically copy it into the Unity project (at `Assets/Plugins/Torus/Android`)
 
+### Develop iOS native plugin
+
+- Build the project for iOS, a Xcode project will be generated, open this Xcode project
+
+- Make changes to `Libraries/Plugins/Torus/iOS/*` (in Xcode)
+
+- Run and debug the changes in Xcode
+
+- Copy changes in `Libraries/Plugins/Torus/iOS/*` (in Xcode) to `Assets/Plugins/Torus/iOS` (in Unity)
+
 ### Develop managed C# scripts
 
 - Open the repository in Unity Hub/Editor 2020
@@ -81,6 +91,7 @@ When you change `appRedirectUri` in `TorusDirect` component, make sure to update
 - Select **Assets**/**Export Package**, unselect **Include dependencies**, select files to export:
   - `Plugins/Torus`
   - `Plugins/Android`
+  - `Plugins/iOS`
   - `Scripts/TorusDirect.cs`
 
 - Name the package `TorusDirect.unitypackage`

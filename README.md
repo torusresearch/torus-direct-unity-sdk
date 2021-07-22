@@ -8,13 +8,13 @@ Please watch our [quick tutorial video](https://www.loom.com/share/caa9d6b5655c4
 
 ### Install the SDK
 
-- Go to [the latest release](/releases), download the `TorusDirect.unitypackage`
+- Go to [the latest release](/releases) and download `TorusDirect.unitypackage`
 
-- Import `TorusDirect.unitypackage` into your Unity project (drag and drop it into Project view in Unity Editor)
+- Import `TorusDirect.unitypackage` into your Unity project (drag and drop it into **Unity Editor** → **Project** view)
 
-- Drag and drop `Scripts/TorusDirect.cs` to your Main Camera (or any game object that exists during your login scene)
+- Drag and drop `Scripts/TorusDirect` to your Main Camera (or any game object that exists during your login scene)
 
-- Add event handlers to your UI/game and call one or several of following functions to login your user in:
+- Add event handlers to your UI/game objects, use one or several of following functions to log your user in:
 
   - `TorusDirect#LoginWithGoogle`
   - `TorusDirect#LoginWithFacebook`
@@ -26,28 +26,29 @@ Please watch our [quick tutorial video](https://www.loom.com/share/caa9d6b5655c4
   - `TorusDirect#LoginWithEmailPassword`
   - `TorusDirect#LoginWithEmailPasswordless`
   - `TorusDirect#LoginWithSMSPasswordless`
+  - `TorusDirect#LoginWithCustomConfig`
 
 - Listen to event `TorusDirect#OnPostLogin` to retrieve login result (or error) including your user's keypair.
 
 ### Build for Android
 
-Make sure to change the minimum Android API level to 21 (Android 5.0) or above (**Player Settings**/**Other Settings**/**Identification**)
+Set Minimum Android API Level to 21 (Android 5.0) or above (in **Player Settings** → **Other Settings** → **Identification**).
 
-When you change `appRedirectUri` in `TorusDirect` component, make to update the same value to `Android/launcherTemplate.gradle`
+When you change `appRedirectUri` in `TorusDirect` component, make sure to update coresponding values in `Plugins/Android/launcherTemplate.gradle`.
 
 ### Build for iOS
 
-After Unity generated the Xcode project for your iOS build, you'll have to add the Swift package [torus-direct-swift-sdk](https://github.com/torusresearch/torus-direct-swift-sdk) manually to the project (we could't find any to do this automatically, contribution is welcome):
+After Unity generated the Xcode project for your iOS build, you'll have to add the Swift package [torus-direct-swift-sdk](https://github.com/torusresearch/torus-direct-swift-sdk) manually to the project (we couldn't find a way to do this automatically yet, contribution is welcome):
 
-- Go to **File**/**Swift Packages**/**Add Swift Package***
+- Go to **File** → **Swift Packages** → **Add Swift Package**
 
-- Enter https://github.com/torusresearch/torus-direct-swift-sdk, select the lastest version
+- Enter https://github.com/torusresearch/torus-direct-swift-sdk and select the lastest version
 
 - Choose to add this package to `UnityFramework` target (not `Unity-iPhone`)
 
 - Done! You should be able to build the project now
 
-When you change `appRedirectUri` in `TorusDirect` component, make to update the corresponding scheme in **Player Settings**/**Other Settings**/**Supported URL schemes**.
+When you change `appRedirectUri` in `TorusDirect` component, make sure to update corresponding value in **Player Settings** → **Other Settings** → **Supported URL schemes**.
 
 ## Development
 

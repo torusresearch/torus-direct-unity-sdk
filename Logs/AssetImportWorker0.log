@@ -1,0 +1,166 @@
+Using pre-set license
+Built from '2020.3/staging' branch; Version is '2020.3.13f1 (71691879b7f5) revision 7432472'; Using compiler version '192528614'; Build Type 'Release'
+OS: 'Windows 10 Pro; OS build 19044.1826; Version 2009; 64bit' Language: 'en' Physical Memory: 11913 MB
+BatchMode: 1, IsHumanControllingUs: 0, StartBugReporterOnCrash: 0, Is64bit: 1, IsPro: 0
+
+ COMMAND LINE ARGUMENTS:
+C:\Program Files\Unity\Hub\Editor\2020.3.13f1\Editor\Unity.exe
+-adb2
+-batchMode
+-noUpm
+-name
+AssetImportWorker0
+-projectPath
+D:/AndroidProjects/Customauth-unity
+-logFile
+Logs/AssetImportWorker0.log
+-srvPort
+49232
+Successfully changed project path to: D:/AndroidProjects/Customauth-unity
+D:/AndroidProjects/Customauth-unity
+Using Asset Import Pipeline V2.
+Refreshing native plugins compatible for Editor in 24.14 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Initialize engine version: 2020.3.13f1 (71691879b7f5)
+[Subsystems] Discovering subsystems at path C:/Program Files/Unity/Hub/Editor/2020.3.13f1/Editor/Data/Resources/UnitySubsystems
+[Subsystems] Discovering subsystems at path D:/AndroidProjects/Customauth-unity/Assets
+GfxDevice: creating device client; threaded=0
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.1]
+    Renderer: Intel(R) Iris(R) Xe Graphics (ID=0x9a49)
+    Vendor:   
+    VRAM:     5956 MB
+    Driver:   27.20.100.8935
+Initialize mono
+Mono path[0] = 'C:/Program Files/Unity/Hub/Editor/2020.3.13f1/Editor/Data/Managed'
+Mono path[1] = 'C:/Program Files/Unity/Hub/Editor/2020.3.13f1/Editor/Data/MonoBleedingEdge/lib/mono/unityjit'
+Mono config path = 'C:/Program Files/Unity/Hub/Editor/2020.3.13f1/Editor/Data/MonoBleedingEdge/etc'
+Using monoOptions --debugger-agent=transport=dt_socket,embedding=1,server=y,suspend=n,address=127.0.0.1:56496
+Begin MonoManager ReloadAssembly
+Registering precompiled unity dll's ...
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.13f1/Editor/Data/PlaybackEngines/WebGLSupport/UnityEditor.WebGL.Extensions.dll
+Register platform support module: C:/Program Files/Unity/Hub/Editor/2020.3.13f1/Editor/Data/PlaybackEngines/WindowsStandaloneSupport/UnityEditor.WindowsStandalone.Extensions.dll
+Registered in 0.001351 seconds.
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 22.55 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  1.502 seconds
+Platform modules already initialized, skipping
+Registering precompiled user dll's ...
+Registered in 0.001835 seconds.
+Begin MonoManager ReloadAssembly
+Native extension for WindowsStandalone target not found
+Native extension for WebGL target not found
+Refreshing native plugins compatible for Editor in 0.29 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Mono: successfully reloaded assembly
+- Completed reload, in  0.769 seconds
+Platform modules already initialized, skipping
+========================================================================
+Worker process is ready to serve import requests
+Launched and connected shader compiler UnityShaderCompiler.exe after 0.03 seconds
+Refreshing native plugins compatible for Editor in 0.31 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 1466 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 68.6 MB.
+System memory in use after: 68.7 MB.
+
+Unloading 23 unused Assets to reduce memory usage. Loaded Objects now: 1894.
+Total: 1.783100 ms (FindLiveObjects: 0.116100 ms CreateObjectMapping: 0.025900 ms MarkObjects: 1.544400 ms  DeleteObjects: 0.095900 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  path: Assets/Plugins/Torus/fetch-node-details-java-2.0.0-sources.jar
+  artifactKey: Guid(7b167c075c5876b4d93d8ea6fbac028b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Plugins/Torus/fetch-node-details-java-2.0.0-sources.jar using Guid(7b167c075c5876b4d93d8ea6fbac028b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c9ea26082fdc29ae1732757bb5d9ca6f') in 0.020410 seconds 
+  Import took 0.024603 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 3.468868 seconds.
+  path: Assets/Plugins/Torus/fetch-node-details-java-2.0.0-sources.jar
+  artifactKey: Guid(7b167c075c5876b4d93d8ea6fbac028b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Plugins/Torus/fetch-node-details-java-2.0.0-sources.jar using Guid(7b167c075c5876b4d93d8ea6fbac028b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'b1e60423d503aa2c98696c42016c7d3d') in 0.003638 seconds 
+  Import took 0.007705 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 4.862356 seconds.
+  path: Assets/Plugins/Torus/fetch-node-details-java-2.0.0-sources.jar
+  artifactKey: Guid(7b167c075c5876b4d93d8ea6fbac028b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Plugins/Torus/fetch-node-details-java-2.0.0-sources.jar using Guid(7b167c075c5876b4d93d8ea6fbac028b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c0ee616534f70f368856ecb82f5caaa3') in 0.002216 seconds 
+  Import took 0.005365 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.016493 seconds.
+  path: Assets/Plugins/Torus/fetch-node-details-java-2.0.0-sources.jar
+  artifactKey: Guid(7b167c075c5876b4d93d8ea6fbac028b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Plugins/Torus/fetch-node-details-java-2.0.0-sources.jar using Guid(7b167c075c5876b4d93d8ea6fbac028b) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'c0ee616534f70f368856ecb82f5caaa3') in 0.002244 seconds 
+  Import took 0.004531 seconds .
+
+========================================================================
+Received Prepare
+Refreshing native plugins compatible for Editor in 3.18 ms, found 2 plugins.
+Preloading 0 native plugins for Editor in 0.00 ms.
+Unloading 16 Unused Serialized files (Serialized files now loaded: 0)
+System memory in use before: 38.8 MB.
+System memory in use after: 38.9 MB.
+
+Unloading 16 unused Assets to reduce memory usage. Loaded Objects now: 1894.
+Total: 2.132700 ms (FindLiveObjects: 0.134600 ms CreateObjectMapping: 0.047000 ms MarkObjects: 1.886700 ms  DeleteObjects: 0.063400 ms)
+
+AssetImportParameters requested are different than current active one (requested -> active):
+  custom:framework-win-MediaFoundation: 216162199b28c13a410421893ffa2e32 -> 
+  custom:video-decoder-ogg-theora: a1e56fd34408186e4bbccfd4996cb3dc -> 
+  custom:container-muxer-webm: aa71ff27fc2769a1b78a27578f13a17b -> 
+  custom:container-demuxer-webm: 4f35f7cbe854078d1ac9338744f61a02 -> 
+  custom:container-demuxer-ogg: 62fdf1f143b41e24485cea50d1cbac27 -> 
+  custom:video-encoder-webm-vp8: eb34c28f22e8b96e1ab97ce403110664 -> 
+  custom:video-decoder-webm-vp8: 9c59270c3fd7afecdb556c50c9e8de78 -> 
+  custom:audio-decoder-ogg-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+  custom:audio-encoder-webm-vorbis: bf7c407c2cedff20999df2af8eb42d56 -> 
+========================================================================
+Received Import Request.
+  Time since last request: 166.920039 seconds.
+  path: Assets/Plugins/Torus/customauth-debug.aar
+  artifactKey: Guid(883832d894999e94ebefcdf6894b27d8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Plugins/Torus/customauth-debug.aar using Guid(883832d894999e94ebefcdf6894b27d8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e6aa25417043f1137f15e314c67375bc') in 0.008432 seconds 
+  Import took 0.013662 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.014359 seconds.
+  path: Assets/Plugins/Torus/customauth-debug.aar
+  artifactKey: Guid(883832d894999e94ebefcdf6894b27d8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Plugins/Torus/customauth-debug.aar using Guid(883832d894999e94ebefcdf6894b27d8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: 'e6aa25417043f1137f15e314c67375bc') in 0.003400 seconds 
+  Import took 0.006706 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 4.615747 seconds.
+  path: Assets/Plugins/Torus/customauth-debug.aar
+  artifactKey: Guid(883832d894999e94ebefcdf6894b27d8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Plugins/Torus/customauth-debug.aar using Guid(883832d894999e94ebefcdf6894b27d8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6710a1d4594ace78b43e5c43f52165a9') in 0.002442 seconds 
+  Import took 0.005389 seconds .
+
+========================================================================
+Received Import Request.
+  Time since last request: 0.016454 seconds.
+  path: Assets/Plugins/Torus/customauth-debug.aar
+  artifactKey: Guid(883832d894999e94ebefcdf6894b27d8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)
+Start importing Assets/Plugins/Torus/customauth-debug.aar using Guid(883832d894999e94ebefcdf6894b27d8) Importer(815301076,1909f56bfc062723c751e8b465ee728b)  -> (artifact id: '6710a1d4594ace78b43e5c43f52165a9') in 0.002396 seconds 
+  Import took 0.004547 seconds .
+

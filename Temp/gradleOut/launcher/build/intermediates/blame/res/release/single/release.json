@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "D:\\AndroidProjects\\Customauth-unity\\Temp\\gradleOut\\launcher\\build\\intermediates\\res\\merged\\release\\mipmap-anydpi-v26_app_icon.xml.flat",
+        "source": "D:\\AndroidProjects\\Customauth-unity\\Temp\\gradleOut\\launcher\\src\\main\\res\\mipmap-anydpi-v26\\app_icon.xml"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\Customauth-unity\\Temp\\gradleOut\\launcher\\build\\intermediates\\res\\merged\\release\\mipmap-anydpi-v26_app_icon_round.xml.flat",
+        "source": "D:\\AndroidProjects\\Customauth-unity\\Temp\\gradleOut\\launcher\\src\\main\\res\\mipmap-anydpi-v26\\app_icon_round.xml"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\Customauth-unity\\Temp\\gradleOut\\launcher\\build\\intermediates\\res\\merged\\release\\mipmap-mdpi_app_icon.png.flat",
+        "source": "D:\\AndroidProjects\\Customauth-unity\\Temp\\gradleOut\\launcher\\src\\main\\res\\mipmap-mdpi\\app_icon.png"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\Customauth-unity\\Temp\\gradleOut\\launcher\\build\\intermediates\\res\\merged\\release\\mipmap-mdpi_ic_launcher_foreground.png.flat",
+        "source": "D:\\AndroidProjects\\Customauth-unity\\Temp\\gradleOut\\launcher\\src\\main\\res\\mipmap-mdpi\\ic_launcher_foreground.png"
+    },
+    {
+        "merged": "D:\\AndroidProjects\\Customauth-unity\\Temp\\gradleOut\\launcher\\build\\intermediates\\res\\merged\\release\\mipmap-mdpi_ic_launcher_background.png.flat",
+        "source": "D:\\AndroidProjects\\Customauth-unity\\Temp\\gradleOut\\launcher\\src\\main\\res\\mipmap-mdpi\\ic_launcher_background.png"
+    }
+]

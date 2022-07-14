@@ -1,0 +1,4 @@
+#Thu Jul 14 15:01:47 SGT 2022
+base.0=D\:\\AndroidProjects\\Customauth-unity\\Temp\\gradleOut\\launcher\\build\\intermediates\\dex\\release\\out\\classes.dex
+path.0=classes.dex
+renamed.0=classes.dex
